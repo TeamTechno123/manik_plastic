@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 12, 2020 at 06:24 AM
+-- Generation Time: Mar 12, 2020 at 01:39 PM
 -- Server version: 10.4.8-MariaDB
--- PHP Version: 7.3.10
+-- PHP Version: 7.3.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -208,6 +208,35 @@ INSERT INTO `customer_group` (`customer_group_id`, `company_id`, `customer_group
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `receipt`
+--
+
+CREATE TABLE `receipt` (
+  `receipt_id` bigint(20) NOT NULL,
+  `company_id` bigint(20) NOT NULL,
+  `receipt_no` varchar(20) NOT NULL,
+  `receipt_date` varchar(20) NOT NULL,
+  `customer_id` bigint(20) NOT NULL,
+  `bill_type` varchar(20) NOT NULL,
+  `bill_id` bigint(20) NOT NULL,
+  `received_amount` double NOT NULL,
+  `balance_amount` double NOT NULL,
+  `receipt_status` int(11) NOT NULL DEFAULT 1,
+  `receipt_addedby` varchar(100) NOT NULL,
+  `receipt_add_date` varchar(50) NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `receipt`
+--
+
+INSERT INTO `receipt` (`receipt_id`, `company_id`, `receipt_no`, `receipt_date`, `customer_id`, `bill_type`, `bill_id`, `received_amount`, `balance_amount`, `receipt_status`, `receipt_addedby`, `receipt_add_date`) VALUES
+(1, 1, '1', '12-03-2020', 1, '1', 2, 4000, 5500, 1, '1', '2020-03-12 16:26:39'),
+(2, 1, '000002', '12-03-2020', 1, '1', 2, 4500, 1000, 1, '1', '2020-03-12 17:09:33');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `user`
 --
 
@@ -278,6 +307,12 @@ ALTER TABLE `customer_group`
   ADD PRIMARY KEY (`customer_group_id`);
 
 --
+-- Indexes for table `receipt`
+--
+ALTER TABLE `receipt`
+  ADD PRIMARY KEY (`receipt_id`);
+
+--
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
@@ -322,6 +357,12 @@ ALTER TABLE `customer`
 --
 ALTER TABLE `customer_group`
   MODIFY `customer_group_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `receipt`
+--
+ALTER TABLE `receipt`
+  MODIFY `receipt_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `user`

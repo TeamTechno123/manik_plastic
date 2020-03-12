@@ -18,22 +18,122 @@ class Transaction extends CI_Controller{
 
 
   public function receipt(){
-    $this->load->view('Include/head');
-    $this->load->view('Include/navbar');
-    $this->load->view('Transaction/receipt');
-    $this->load->view('Include/footer');
+    $mani_user_id = $this->session->userdata('mani_user_id');
+    $mani_company_id = $this->session->userdata('mani_company_id');
+    $mani_role_id = $this->session->userdata('mani_role_id');
+    if($mani_user_id == '' && $mani_company_id == ''){ header('location:'.base_url().'User'); }
+    $this->form_validation->set_rules('receipt_no', 'Type', 'trim|required');
+    if ($this->form_validation->run() != FALSE) {
+      $data = array(
+        'company_id' => $mani_company_id,
+        'receipt_addedby' => $mani_user_id,
+        'receipt_no' => $this->input->post('receipt_no'),
+        'receipt_date' => $this->input->post('receipt_date'),
+        'customer_id' => $this->input->post('customer_id'),
+        'bill_type' => $this->input->post('bill_type'),
+        'bill_id' => $this->input->post('bill_id'),
+        'received_amount' => $this->input->post('received_amount'),
+        'balance_amount' => $this->input->post('balance_amount'),
+        // 'receipt_status' => $this->input->post('receipt_status'),
+      );
+      $receipt_id = $this->User_Model->save_data('receipt', $data);
+      $this->session->set_flashdata('save_success','success');
+      header('location:'.base_url().'Transaction/receipt_list');
+    }
+    $data['bill_list'] = $this->User_Model->get_list($mani_company_id,'bill_id','ASC','bill');
+    $data['customer_list'] = $this->User_Model->get_list($mani_company_id,'customer_id','ASC','customer');
+    $data['receipt_no'] = $this->User_Model->get_count_no($mani_company_id,'receipt_id','receipt');
+    $this->load->view('Include/head',$data);
+    $this->load->view('Include/navbar',$data);
+    $this->load->view('Transaction/receipt',$data);
+    $this->load->view('Include/footer',$data);
   }
 
   public function receipt_list(){
-    $this->load->view('Include/head');
-    $this->load->view('Include/navbar');
-    $this->load->view('Transaction/receipt_list');
-    $this->load->view('Include/footer');
+    $mani_user_id = $this->session->userdata('mani_user_id');
+    $mani_company_id = $this->session->userdata('mani_company_id');
+    $mani_role_id = $this->session->userdata('mani_role_id');
+    if($mani_user_id == '' && $mani_company_id == ''){ header('location:'.base_url().'User'); }
+    $data['receipt_list'] = $this->User_Model->get_receipt_list($mani_company_id);
+    $this->load->view('Include/head', $data);
+    $this->load->view('Include/navbar', $data);
+    $this->load->view('Transaction/receipt_list', $data);
+    $this->load->view('Include/footer', $data);
   }
 
-  public function bill_list(){
+  public function edit_receipt($receipt_id){
+    $mani_user_id = $this->session->userdata('mani_user_id');
+    $mani_company_id = $this->session->userdata('mani_company_id');
+    $mani_role_id = $this->session->userdata('mani_role_id');
+    if($mani_user_id == '' && $mani_company_id == ''){ header('location:'.base_url().'User'); }
+    $this->form_validation->set_rules('receipt_no', 'Receipt No.', 'trim|required');
+    if ($this->form_validation->run() != FALSE) {
+      $update_data = array(
+        'company_id' => $mani_company_id,
+        'receipt_addedby' => $mani_user_id,
+        'receipt_no' => $this->input->post('receipt_no'),
+        'receipt_date' => $this->input->post('receipt_date'),
+        'customer_id' => $this->input->post('customer_id'),
+        'bill_type' => $this->input->post('bill_type'),
+        'bill_id' => $this->input->post('bill_id'),
+        'received_amount' => $this->input->post('received_amount'),
+        'balance_amount' => $this->input->post('balance_amount'),
+        'receipt_addedby' => $mani_user_id,
+      );
+      $this->User_Model->update_info('receipt_id', $receipt_id, 'receipt', $update_data);
+      $this->session->set_flashdata('update_success','success');
+    header('location:'.base_url().'Transaction/receipt_list');
+    }
 
+    // $data['receipt_list'] = $this->User_Model->get_receipt_list($mani_company_id);
+    $receipt_list = $this->User_Model->get_info('receipt_id', $receipt_id, 'receipt');
+    $data['bill_list'] = $this->User_Model->get_list($mani_company_id,'bill_id','ASC','bill');
+    $data['customer_list'] = $this->User_Model->get_list($mani_company_id,'customer_id','ASC','customer');
+    if($receipt_list == ''){ header('location:'.base_url().'Transaction/receipt_list'); }
+    foreach($receipt_list as $info){
+      $data['update'] = 'update';
+      $data['receipt_id'] = $info->receipt_id;
+      $data['receipt_no'] = $info->receipt_no;
+      $data['receipt_date'] = $info->receipt_date;
+      $data['customer_id'] = $info->customer_id;
+      // $data['customer_name'] = $info->customer_name;
+      $data['bill_type'] = $info->bill_type;
+      $data['bill_id'] = $info->bill_id;
+      $data['received_amount'] = $info->received_amount;
+      $data['balance_amount'] = $info->balance_amount;
+    }
+    $this->load->view('Include/head',$data);
+    $this->load->view('Include/navbar',$data);
+    $this->load->view('Transaction/receipt',$data);
+    $this->load->view('Include/footer',$data);
   }
+
+  // Delete User....
+  public function delete_receipt($receipt_id){
+    $mani_user_id = $this->session->userdata('mani_user_id');
+    $mani_company_id = $this->session->userdata('mani_company_id');
+    $mani_role_id = $this->session->userdata('mani_role_id');
+    if($mani_user_id == '' && $mani_company_id == ''){ header('location:'.base_url().'User'); }
+    $this->User_Model->delete_info('receipt_id', $receipt_id, 'receipt');
+    $this->session->set_flashdata('delete_success','success');
+    header('location:'.base_url().'Transaction/receipt_list');
+  }
+
+  public function get_bill_amount(){
+    $bill_type = $this->input->post('bill_type');
+    $bill_list = $this->User_Model->bill_list($bill_type);
+    echo "<option value='' selected >Select Bill No.</option>";
+    foreach ($bill_list as $list) {
+      echo "<option class=''> ".$list->bill_id." </option>";
+    }
+  }
+
+  public function get_bill_net_amount(){
+    $bill_id = $this->input->post('bill_id');
+    $bill_list = $this->User_Model->get_info_arr_bill($bill_id);
+    $final_received=($bill_list['0']['bill_net_tot_amt'] )- ($bill_list['0']['received_amount']);
+    echo $final_received;
+}
 
   public function bill(){
     $mani_user_id = $this->session->userdata('mani_user_id');

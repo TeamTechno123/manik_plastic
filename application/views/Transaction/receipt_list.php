@@ -40,23 +40,22 @@
                 </tr>
                 </thead>
                 <tbody>
-                  <!-- <?php $i = 0;
-                  foreach ($supplier_list as $list) {
+                  <?php $i = 0;
+                  foreach ($receipt_list as $list) {
                     $i++; ?>
                   <tr>
                     <td><?php echo $i; ?></td>
-                    <td><?php echo $list->supplier_name; ?></td>
-                    <td><?php echo $list->supplier_company; ?></td>
-                    <td><?php echo $list->supplier_email; ?></td>
-                    <td><?php echo $list->supplier_mobile; ?></td>
-                    <td><?php echo $list->supplier_mobile; ?></td>
-                    <td><?php echo $list->supplier_update_date; ?></td>
+                    <td><?php echo $list->receipt_no; ?></td>
+                    <td><?php echo $list->receipt_date; ?></td>
+                    <td><?php echo $list->customer_name; ?></td>
+                    <td><?php echo $list->received_amount; ?></td>
+                    <td><?php echo $list->balance_amount; ?></td>
                     <td>
-                      <a href="<?php echo base_url(); ?>User/edit_supplier/<?php echo $list->supplier_id; ?>"> <i class="fa fa-edit"></i> </a>
-                      <a href="<?php echo base_url(); ?>User/delete_supplier/<?php echo $list->supplier_id; ?>" onclick="return confirm('Delete this Customer');" class="ml-2 text-danger"> <i class="fa fa-trash"></i> </a>
+                      <a href="<?php echo base_url(); ?>Transaction/edit_receipt/<?php echo $list->receipt_id; ?>"> <i class="fa fa-edit"></i> </a>
+                      <a href="<?php echo base_url(); ?>Transaction/delete_receipt/<?php echo $list->receipt_id; ?>" onclick="return confirm('Delete this Customer');" class="ml-2 text-danger"> <i class="fa fa-trash"></i> </a>
                     </td>
                   </tr>
-                  <?php } ?> -->
+                  <?php } ?>
                 </tbody>
               </table>
             <!-- </div> -->

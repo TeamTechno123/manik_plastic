@@ -191,6 +191,24 @@ class User_Model extends CI_Model{
 
   /****************************** Transaction *****************************/
 
+  public function get_count_no($company_id, $field_name, $tbl_name){
+    $query = $this->db->select('MAX('.$field_name.') as num')
+    ->where('company_id', $company_id)
+    ->from($tbl_name)
+    ->get();
+    $result =  $query->result_array();
+    if($result){
+      $old_num = $result[0]['num'];
+    } else{
+      $old_num = 0;
+    }
+
+    // $value2 = substr($newresult, 10, 13);                  //separating numeric part
+    $value2 = $old_num + 1;                            //Incrementing numeric part
+    $value2 = "" . sprintf('%06s', $value2);               //concatenating incremented value
+    return $value = $value2;
+  }
+
   public function get_bill_no($bill_type){
     $this->db->select('MAX(bill_no) as num');
     $this->db->from('bill');
@@ -201,6 +219,61 @@ class User_Model extends CI_Model{
     else{ $old_num = 0; }
     $value = $old_num + 1;
     return $value;
+  }
+
+  public function get_receipt_list($company_id){
+    $this->db->select('receipt.*,bill.*,customer.*');
+    $this->db->from('receipt');
+    $this->db->where('receipt.company_id',$company_id);
+    $this->db->join('bill', 'bill.bill_id=receipt.bill_id', 'LEFT');
+    $this->db->join('customer', 'customer.customer_id=receipt.customer_id', 'LEFT');
+    // $this->db->where('product.product_status',1);
+    $query = $this->db->get();
+    $result = $query->result();
+    return $result;
+  }
+
+  public function bill_list($bill_type){
+    $this->db->select('bill.*');
+    $this->db->from('bill');
+    $this->db->where('bill.bill_type',$bill_type);
+    $query = $this->db->get();
+    $result = $query->result();
+    return $result;
+  }
+
+  // public function get_info_arr_bill($bill_id){
+  //   $this->db->select('bill.*');
+  //   $this->db->from('bill');
+  //   $this->db->where('bill.bill_id',$bill_id);
+  //   $query = $this->db->get();
+  //   $result = $query->result_array();
+  //   return $result;
+  // }
+
+  public function get_info_arr_bill($bill_id){
+    $this->db->select('bill.*,receipt.*');
+    $this->db->from('bill');
+    $this->db->where('bill.bill_id',$bill_id);
+    $this->db->join('receipt', 'receipt.bill_id=bill.bill_id', 'LEFT');
+    $query = $this->db->get();
+    $this->db->select_sum('received_amount');
+    $result = $query->result_array();
+    print_r($result);
+    return $result;
+
+  }
+
+  public function get_receipt_list_details($receipt_id){
+    $this->db->select('receipt.*,bill.*,customer.*');
+    $this->db->from('receipt');
+    $this->db->where('receipt.receipt_id',$receipt_id);
+    $this->db->join('bill', 'bill.bill_id=receipt.bill_id', 'LEFT');
+    $this->db->join('customer', 'customer.customer_id=receipt.customer_id', 'LEFT');
+    // $this->db->where('product.product_status',1);
+    $query = $this->db->get();
+    $result = $query->result();
+    return $result;
   }
 
 }
