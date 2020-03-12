@@ -1,0 +1,96 @@
+body{
+  padding: 0px;
+  margin: 0px;
+}
+
+.top-navbar{
+  background-color: #0f4075;
+}
+.bg-blue{
+  background-color: #0f4075!important;
+  color: #fff!important;
+}
+
+.nav-link{
+  font-size: 18px;
+}
+
+.banner{
+  width: 100%;
+  height: 100%;
+  margin-top: -8px;
+  background-color:  #0f4075;
+  padding-top: 50px;
+  padding-bottom: 20px;
+}
+
+.banner h1{
+  font-size: 2.6rem;
+  text-align: center;
+  color: #fff;
+  padding-top: 20px;
+  padding-bottom: 10px;
+}
+
+.banner p{
+  color: #fff;
+  text-align: center;
+}
+.btn-head{
+  text-align: center;
+  background-color: #fff;
+  color: #0f4075;
+  border-radius: 50px;
+  border-color: 2px solid #fff;
+  font-size: 17px;
+  margin: 20px;
+}
+
+.head-img{
+  padding-top: 30px;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+}
+.navbar-brand{
+  padding-top: 10px;
+}
+.middle-btn .btn-primary{
+  margin: 10px;
+  border-color: #0f4075!important;
+}
+
+.svg{
+  width: 30px;
+  height: 25px;
+  margin-right: 10px;
+}
+
+.card-home{
+  padding-top: 40px;
+  padding-bottom: 30px;
+}
+
+.heading-mid{
+  padding-top: 10px;
+  padding-bottom: 20px;
+}
+
+.card-home .card-img-top{
+
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  margin-top: 30px;
+  margin-bottom: 20px;
+  width:  52px;
+  height:  50px;
+}
+
+
+.text-blue{
+  color: #428bca;
+}
+
+.card-home .card{
+  border: none!important;
+}
