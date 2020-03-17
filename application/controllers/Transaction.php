@@ -130,10 +130,16 @@ class Transaction extends CI_Controller{
 
   public function get_bill_net_amount(){
     $bill_id = $this->input->post('bill_id');
-    $bill_list = $this->User_Model->get_info_arr_bill($bill_id);
-    $final_received=($bill_list['0']['bill_net_tot_amt'] )- ($bill_list['0']['received_amount']);
-    echo $final_received;
+    $total_received = $this->User_Model->get_total_received_bill($bill_id);
+    $bill_amount = $this->User_Model->get_info_arr_fields('bill_net_tot_amt','bill_id', $bill_id, 'bill');
+    $pending_amt=$bill_amount[0]['bill_net_tot_amt']-$total_received;
+    // $final_received=($bill_list['0']['bill_net_tot_amt'] )- ($bill_list['0']['received_amount']);
+    echo $pending_amt;
+
+
 }
+
+
 
   public function bill(){
     $mani_user_id = $this->session->userdata('mani_user_id');
@@ -164,6 +170,29 @@ class Transaction extends CI_Controller{
     $this->load->view('Include/top_link2', $data);
     $this->load->view('Transaction/bill', $data);
     $this->load->view('Include/footer', $data);
+  }
+
+  public function bill_list(){
+    $mani_user_id = $this->session->userdata('mani_user_id');
+    $mani_company_id = $this->session->userdata('mani_company_id');
+    $mani_role_id = $this->session->userdata('mani_role_id');
+    if($mani_user_id == '' && $mani_company_id == ''){ header('location:'.base_url().'User'); }
+    $data['bill_list'] = $this->User_Model->get_list($mani_company_id,'bill_id','ASC','bill');
+    $this->load->view('Include/head', $data);
+    $this->load->view('Include/navbar', $data);
+    $this->load->view('Transaction/bill_list', $data);
+    $this->load->view('Include/footer', $data);
+  }
+
+  // Delete User....
+  public function delete_bill($bill_id){
+    $mani_user_id = $this->session->userdata('mani_user_id');
+    $mani_company_id = $this->session->userdata('mani_company_id');
+    $mani_role_id = $this->session->userdata('mani_role_id');
+    if($mani_user_id == '' && $mani_company_id == ''){ header('location:'.base_url().'User'); }
+    $this->User_Model->delete_info('bill_id', $bill_id, 'bill');
+    $this->session->set_flashdata('delete_success','success');
+    header('location:'.base_url().'Transaction/bill_list');
   }
 
   public function get_bill_no(){

@@ -101,7 +101,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="<?php echo base_url(); ?>Transaction/bill" class="nav-link">
+              <a href="<?php echo base_url(); ?>Transaction/bill_list" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Bill</p>
               </a>

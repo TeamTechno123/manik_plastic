@@ -199,13 +199,13 @@
                   </div>
                 </div>
                 <div class="card-footer row">
-                  <div class="col-md-12 text-right">
+                  <div class="col-md-12 text-center">
                     <?php if(isset($update)){ ?>
                       <button id="btn_update" type="submit" class="btn btn-primary">Update </button>
                     <?php } else{ ?>
                       <button id="btn_save" type="submit" class="btn btn-success px-4">Save</button>
                     <?php } ?>
-                    <a href="<?php echo base_url() ?>User/supplier_list" class="btn btn-default ml-4">Cancel</a>
+                    <a href="<?php echo base_url() ?>Transaction/bill_list" class="btn btn-default ml-4">Cancel</a>
                   </div>
                 </div>
               </form>

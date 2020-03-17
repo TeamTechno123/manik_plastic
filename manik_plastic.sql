@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 12, 2020 at 01:39 PM
+-- Generation Time: Mar 17, 2020 at 05:46 AM
 -- Server version: 10.4.8-MariaDB
 -- PHP Version: 7.3.11
 
@@ -69,9 +69,7 @@ CREATE TABLE `bill` (
 
 INSERT INTO `bill` (`bill_id`, `company_id`, `bill_no`, `bill_date`, `bill_type`, `customer_id`, `bill_basic_amt`, `bill_gst_amt`, `bill_net_tot_amt`, `bill_status`, `bill_addedby`, `bill_date2`) VALUES
 (1, 1, 1, '11-03-2020', '2', 2, 9500, 500, 10000, 1, '1', '11-03-2020 18:19:27 PM'),
-(2, 1, 1, '10-03-2020', '1', 2, 9500, 0, 9500, 1, '1', '11-03-2020 18:30:04 PM'),
-(3, 1, 2, '11-03-2020', '2', 2, 6600, 0, 6600, 1, '1', '11-03-2020 18:32:53 PM'),
-(4, 1, 3, '11-03-2020', '2', 1, 9399.000000000002, 495.0000000000001, 9894.000000000002, 1, '1', '11-03-2020 18:36:28 PM');
+(2, 1, 1, '10-03-2020', '1', 2, 9500, 0, 9500, 1, '1', '11-03-2020 18:30:04 PM');
 
 -- --------------------------------------------------------
 
@@ -231,8 +229,8 @@ CREATE TABLE `receipt` (
 --
 
 INSERT INTO `receipt` (`receipt_id`, `company_id`, `receipt_no`, `receipt_date`, `customer_id`, `bill_type`, `bill_id`, `received_amount`, `balance_amount`, `receipt_status`, `receipt_addedby`, `receipt_add_date`) VALUES
-(1, 1, '1', '12-03-2020', 1, '1', 2, 4000, 5500, 1, '1', '2020-03-12 16:26:39'),
-(2, 1, '000002', '12-03-2020', 1, '1', 2, 4500, 1000, 1, '1', '2020-03-12 17:09:33');
+(2, 1, '000002', '15-03-2020', 1, '1', 2, 4500, 0, 1, '1', '2020-03-15 15:33:49'),
+(3, 1, '000003', '01-03-2020', 1, '1', 2, 5000, 0, 1, '1', '2020-03-15 15:38:42');
 
 -- --------------------------------------------------------
 
@@ -362,7 +360,7 @@ ALTER TABLE `customer_group`
 -- AUTO_INCREMENT for table `receipt`
 --
 ALTER TABLE `receipt`
-  MODIFY `receipt_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `receipt_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `user`

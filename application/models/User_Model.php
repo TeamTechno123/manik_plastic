@@ -259,7 +259,7 @@ class User_Model extends CI_Model{
     $query = $this->db->get();
     $this->db->select_sum('received_amount');
     $result = $query->result_array();
-    print_r($result);
+    // print_r($result);
     return $result;
 
   }
@@ -274,6 +274,15 @@ class User_Model extends CI_Model{
     $query = $this->db->get();
     $result = $query->result();
     return $result;
+  }
+
+  public function get_total_received_bill($bill_id){
+    $this->db->select('SUM(received_amount) as received_amount');
+    $this->db->from('receipt');
+    $this->db->where('bill_id',$bill_id);
+    $query = $this->db->get();
+    $result = $query->result_array();
+    return $result[0]['received_amount'];
   }
 
 }

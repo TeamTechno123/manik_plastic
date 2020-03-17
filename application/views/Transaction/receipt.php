@@ -69,7 +69,7 @@
 
 
 
-                  <input type="text" name="bill_net_tot_amt1" id="bill_net_tot_amt1" >
+                  <input type="hidden" name="bill_net_tot_amt1" id="bill_net_tot_amt1" >
                   <div class="form-group col-md-6">
                     <label>Received Amount</label>
                     <input type="text" class="form-control form-control-sm" name="received_amount" id="received_amount" value="<?php if(isset($received_amount)){ echo $received_amount; } ?>" placeholder="Received Amount"  required>
